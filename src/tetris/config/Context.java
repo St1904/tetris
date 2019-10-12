@@ -1,5 +1,7 @@
 package tetris.config;
 
+import javafx.scene.paint.Color;
+
 import java.io.*;
 import java.util.EnumMap;
 import java.util.Map;
@@ -31,15 +33,35 @@ public class Context {
     }
 
     public int getWindowWidth() {
-        return getIntValue(Property.MAIN_WINDOW_WIDTH);
+        return getIntValue(Property.WINDOW_HEIGHT) * 3 / 4;
     }
 
     public int getWindowHeight() {
-        return getIntValue(Property.MAIN_WINDOW_HEIGHT);
+        return getIntValue(Property.WINDOW_HEIGHT);
+    }
+
+    public int getBlockSize() {
+        return getIntValue(Property.WINDOW_HEIGHT) / 20;
+    }
+
+    public Color getBgColor() {
+        return getColorValue(Property.BACKGROUND_COLOR);
+    }
+
+    public Color getLinesColor() {
+        return getColorValue(Property.LINES_COLOR);
     }
 
     // TODO show error if it is not OK
     private int getIntValue(Property property) {
         return Integer.parseInt(configuration.get(property));
+    }
+
+    private String getStringValue(Property property) {
+        return configuration.get(property);
+    }
+
+    private Color getColorValue(Property property) {
+        return Color.web(getStringValue(property));
     }
 }
