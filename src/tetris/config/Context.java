@@ -1,45 +1,62 @@
 package tetris.config;
 
-import java.io.*;
+import javafx.scene.paint.Color;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.EnumMap;
-import java.util.Map;
-import java.util.logging.Logger;
 
 public class Context {
 
-    private static final Logger LOG = Logger.getLogger(Context.class.getName());
-
     private final EnumMap<Property, String> configuration = new EnumMap<>(Property.class);
 
-    public void init(String path) {
-        try {
-            File propFile = new File(path);
-            BufferedReader reader = new BufferedReader(new FileReader(propFile));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("=");
-                configuration.put(Property.getProperty(parts[0]), parts[1]);
+    public void init(String path) throws Exception {
+        File propFile = new File(path);
+        BufferedReader reader = new BufferedReader(new FileReader(propFile));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parts = line.split("=");
+            Property property = Property.getProperty(parts[0]);
+            if (property != null) {
+                configuration.put(property, parts[1]);
             }
-        } catch (IOException e) {
-            // TODO show window with error
-        }
-
-        // just to be sure it is OK
-        for (Map.Entry<Property, String> propertyStringEntry : configuration.entrySet()) {
-            LOG.fine("prop: " + propertyStringEntry.getKey() + ", value: " + propertyStringEntry.getValue());
         }
     }
 
     public int getWindowWidth() {
-        return getIntValue(Property.MAIN_WINDOW_WIDTH);
+        return getWindowHeight() * 3 / 4;
     }
 
     public int getWindowHeight() {
-        return getIntValue(Property.MAIN_WINDOW_HEIGHT);
+        return getIntValue(Property.WINDOW_HEIGHT);
     }
 
-    // TODO show error if it is not OK
+    public int getBlockSize() {
+        return getIntValue(Property.WINDOW_HEIGHT) / 20;
+    }
+
+    public Color getBgColor() {
+        return getColorValue(Property.BACKGROUND_COLOR);
+    }
+
+    public Color getLinesColor() {
+        return getColorValue(Property.LINES_COLOR);
+    }
+
+    public int getLinePosition() {
+        return getWindowWidth() * 2 / 3 + 1;
+    }
+
     private int getIntValue(Property property) {
         return Integer.parseInt(configuration.get(property));
+    }
+
+    private String getStringValue(Property property) {
+        return configuration.get(property);
+    }
+
+    private Color getColorValue(Property property) {
+        return Color.web(getStringValue(property));
     }
 }
