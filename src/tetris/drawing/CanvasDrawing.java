@@ -31,9 +31,9 @@ public final class CanvasDrawing {
 
     public void drawField(byte[][] field) {
         clearField();
-        for (int x = 0; x < field.length; x++) {
-            for (int y = 0; y < field[0].length; y++) {
-                if (field[x][y] == 1) {
+        for (int y = 0; y < field.length; y++) {
+            for (int x = 0; x < field[0].length; x++) {
+                if (field[y][x] == 1) {
                     drawBlock(x, y);
                 }
             }
