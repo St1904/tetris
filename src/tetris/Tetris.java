@@ -5,8 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tetris.config.Context;
-import tetris.drawing.CanvasHolder;
-import tetris.drawing.DrawingUtil;
+import tetris.drawing.CanvasDrawing;
 
 public class Tetris extends Application {
 
@@ -20,13 +19,52 @@ public class Tetris extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Old School Tetris");
-        CanvasHolder canvasHolder = new CanvasHolder(context);
-        Group group = new Group(canvasHolder.getCanvas());
+        CanvasDrawing canvasDrawing = new CanvasDrawing(context);
+        Group group = new Group(canvasDrawing.getCanvas());
         Scene scene = new Scene(group);
         primaryStage.setScene(scene);
 
-        DrawingUtil.drawWindow(canvasHolder);
+        canvasDrawing.drawWindow();
+
+        canvasDrawing.drawField(testField());
 
         primaryStage.show();
+    }
+
+    private byte[][] testField() {
+        return new byte[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        // it looks like:
+        // ----------
+        // ----------
+        // --------**
+        // --------**
+        // --*-------
+        // --**------
+        // ---*--***-
+        // -------*--
+        // ----------
+        // ----------
+        // ----------
+        // ----------
+        // ----------
+        // -****-----
+        // ----------
+        // ----------
+        // ----------
+        // ----------
+        // ----------
+        // ----------
+
     }
 }

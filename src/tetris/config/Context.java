@@ -40,12 +40,16 @@ public class Context {
         return getColorValue(Property.BACKGROUND_COLOR);
     }
 
-    public Color getLinesColor() {
+    public Color getFiguresColor() {
         return getColorValue(Property.LINES_COLOR);
     }
 
+    public int getFieldWidth() {
+        return getWindowWidth() * 2 / 3;
+    }
+
     public int getLinePosition() {
-        return getWindowWidth() * 2 / 3 + 1;
+        return getFieldWidth() + 1;
     }
 
     private int getIntValue(Property property) {
