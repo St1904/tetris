@@ -7,7 +7,7 @@ public enum Property {
 
     WINDOW_HEIGHT("window.height"),
     BACKGROUND_COLOR("background.color"),
-    LINES_COLOR("figures.color");
+    FIGURES_COLOR("figures.color");
 
     private static final Map<String, Property> translator = new HashMap<>();
     static {

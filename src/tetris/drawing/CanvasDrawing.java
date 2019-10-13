@@ -2,34 +2,31 @@ package tetris.drawing;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import tetris.config.Context;
+
+import static tetris.config.Config.*;
 
 public final class CanvasDrawing {
 
-    private static final int LINE_WIDTH = 2;
-
-    private final Context context;
     private final Canvas canvas;
     private final GraphicsContext gc;
 
-    public CanvasDrawing(Context context) {
-        this.context = context;
-        this.canvas = new Canvas(context.getWindowWidth(), context.getWindowHeight());
+    public CanvasDrawing() {
+        this.canvas = new Canvas(windowWidth, windowHeight);
         gc = canvas.getGraphicsContext2D();
     }
 
     public void drawWindow() {
-        gc.setFill(context.getBgColor());
-        gc.fillRect(0, 0, context.getWindowWidth(), context.getWindowHeight());
+        gc.setFill(bgColor);
+        gc.fillRect(0, 0, windowWidth, windowHeight);
 
         gc.setLineWidth(LINE_WIDTH);
-        gc.setStroke(context.getFiguresColor());
-        gc.strokeLine(context.getLinePosition(), 0, context.getLinePosition(), context.getWindowHeight());
+        gc.setStroke(figuresColor);
+        gc.strokeLine(linePosition, 0, linePosition, windowHeight);
     }
 
     private void clearField() {
-        gc.setFill(context.getBgColor());
-        gc.fillRect(0, 0, context.getFieldWidth(), context.getWindowHeight());
+        gc.setFill(bgColor);
+        gc.fillRect(0, 0, fieldWidth, windowHeight);
     }
 
     public void drawField(byte[][] field) {
@@ -44,11 +41,10 @@ public final class CanvasDrawing {
     }
 
     private void drawBlock(int x, int y) {
-        int blockSize = context.getBlockSize();
-        gc.setStroke(context.getFiguresColor());
+        gc.setStroke(figuresColor);
         gc.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
-        gc.setFill(context.getFiguresColor());
-        gc.fillRect((x + 0.2) * blockSize, (y + 0.2) * blockSize, blockSize * 3 / 5, blockSize * 3 / 5);
+        gc.setFill(figuresColor);
+        gc.fillRect((x + 0.2) * blockSize, (y + 0.2) * blockSize, blockSize * 0.6, blockSize * 0.6);
     }
 
     public Canvas getCanvas() {
