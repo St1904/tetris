@@ -1,26 +1,33 @@
 package tetris.drawing;
 
+import tetris.figures.Figure;
+
 public class Field {
 
     public static final byte[][] FIELD = new byte[20][10];
-    private static byte[][] activeFigureCoordinates = {{0, 5}, {0, 6}, {1, 5}, {1, 6}};
+    private static int[][] activeFigure = Figure.pickRandom().getPoints()[0];
+    private static byte activeFigureX = 4;
+    private static byte activeFigureY = 0;
+//    private static byte[][] activeFigureCoordinates = {{0, 5}, {0, 6}, {1, 5}, {1, 6}};
 
     public static void moveActiveFigure(int x, int y) {
-        for (int i = 0; i < activeFigureCoordinates.length; i++) {
-            activeFigureCoordinates[i][0] += y;
-            activeFigureCoordinates[i][1] += x;
-        }
+        activeFigureX += x;
+        activeFigureY += y;
     }
 
     public static void drawActiveFigureOnField() {
-        for (int i = 0; i < activeFigureCoordinates.length; i++) {
-            FIELD[activeFigureCoordinates[i][0]][activeFigureCoordinates[i][1]] = 1;
+        for (int y = activeFigureY; y < activeFigureY + 4; y++) {
+            for (int x = activeFigureX; x < activeFigureX + 4; x++) {
+                FIELD[y][x] = (byte) activeFigure[y - activeFigureY][x - activeFigureX];
+            }
         }
     }
 
     public static void drawActiveFigureOutOfField() {
-        for (int i = 0; i < activeFigureCoordinates.length; i++) {
-            FIELD[activeFigureCoordinates[i][0]][activeFigureCoordinates[i][1]] = 0;
+        for (int y = activeFigureY; y < activeFigureY + 4; y++) {
+            for (int x = activeFigureX; x < activeFigureX + 4; x++) {
+                FIELD[y][x] = 0;
+            }
         }
     }
 
