@@ -31,8 +31,12 @@ public class Tetris extends Application {
 
         canvasDrawing.drawWindow();
 
-        java.util.Timer timer = new java.util.Timer();
+        Field.useCorrection();
+        Field.drawActiveFigureOnField();
+        canvasDrawing.drawField(Field.FIELD);
+        Field.printFieldToConsole();
 
+        java.util.Timer timer = new java.util.Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -43,8 +47,8 @@ public class Tetris extends Application {
                 Field.printFieldToConsole();
             }
         };
+        timer.schedule(timerTask, 1000, 1000);
 
-        timer.schedule(timerTask, 0, 1000);
         scene.setOnKeyPressed(keyEvent -> {
             KeyCode code = keyEvent.getCode();
             if (code != UP && code != DOWN && code != LEFT && code != RIGHT) {

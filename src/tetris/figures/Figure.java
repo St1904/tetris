@@ -1,5 +1,6 @@
 package tetris.figures;
 
+import java.util.Date;
 import java.util.Random;
 
 public enum Figure {
@@ -146,8 +147,13 @@ public enum Figure {
         return points;
     }
 
-    public static Figure pickRandom() {
-        int number = new Random().nextInt(ALL_FIGURES.length());
+    public static Figure pickRandomFigure() {
+        int number = new Random(new Date().getTime()).nextInt(ALL_FIGURES.length());
         return Figure.valueOf(ALL_FIGURES.substring(number, number + 1));
+    }
+
+    public int[][] pickRandomPhase() {
+        int number = new Random(new Date().getTime()).nextInt(this.points.length);
+        return this.points[number];
     }
 }
