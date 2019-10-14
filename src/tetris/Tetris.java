@@ -22,7 +22,7 @@ public class Tetris extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Old School Tetris");
+        primaryStage.setTitle("OldSchool Tetris");
         CanvasDrawing canvasDrawing = new CanvasDrawing();
         Group group = new Group(canvasDrawing.getCanvas());
         Scene scene = new Scene(group);
@@ -31,47 +31,53 @@ public class Tetris extends Application {
 
         canvasDrawing.drawWindow();
 
-        Field.useCorrection();
-        Field.drawActiveFigureOnField();
-        canvasDrawing.drawField(Field.FIELD);
-        Field.printFieldToConsole();
+        pickAndDrawNewFigure(canvasDrawing);
 
         java.util.Timer timer = new java.util.Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                Field.drawActiveFigureOutOfField();
-                Field.moveActiveFigure(0, 1);
-                Field.drawActiveFigureOnField();
-                canvasDrawing.drawField(Field.FIELD);
-                Field.printFieldToConsole();
+                boolean moved = Field.moveAndCheck(0, 1);
+                if (moved) {
+                    canvasDrawing.drawField(Field.FIELD);
+                    Field.printFieldToConsole();
+                } else {
+                    Field.removeRows();
+                    pickAndDrawNewFigure(canvasDrawing);
+                }
             }
         };
-        timer.schedule(timerTask, 1000, 1000);
+        timer.schedule(timerTask, 300, 300);
 
         scene.setOnKeyPressed(keyEvent -> {
             KeyCode code = keyEvent.getCode();
             if (code != UP && code != DOWN && code != LEFT && code != RIGHT) {
                 return;
             }
-            Field.drawActiveFigureOutOfField();
             switch (code) {
                 case UP:
-                    Field.moveActiveFigure(0, -1);
+                    Field.rotateAndCheck();
                     break;
                 case DOWN:
-                    Field.moveActiveFigure(0, 1);
+                    Field.moveAndCheck(0, 1);
                     break;
                 case LEFT:
-                    Field.moveActiveFigure(-1, 0);
+                    Field.moveAndCheck(-1, 0);
                     break;
                 case RIGHT:
-                    Field.moveActiveFigure(1, 0);
+                    Field.moveAndCheck(1, 0);
                     break;
             }
-            Field.drawActiveFigureOnField();
             canvasDrawing.drawField(Field.FIELD);
             Field.printFieldToConsole();
         });
+    }
+
+    private void pickAndDrawNewFigure(CanvasDrawing canvasDrawing) {
+        Field.pickNewFigure();
+        Field.useCorrection();
+        Field.drawActiveFigureOnField();
+        canvasDrawing.drawField(Field.FIELD);
+        Field.printFieldToConsole();
     }
 }

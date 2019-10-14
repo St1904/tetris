@@ -143,17 +143,26 @@ public enum Figure {
         this.points = points;
     }
 
-    public int[][][] getPoints() {
-        return points;
-    }
-
     public static Figure pickRandomFigure() {
         int number = new Random(new Date().getTime()).nextInt(ALL_FIGURES.length());
         return Figure.valueOf(ALL_FIGURES.substring(number, number + 1));
     }
 
-    public int[][] pickRandomPhase() {
-        int number = new Random(new Date().getTime()).nextInt(this.points.length);
-        return this.points[number];
+    public int pickRandomPhase() {
+        return new Random(new Date().getTime()).nextInt(this.points.length);
+    }
+
+    public int[][] getPhase(int phase) {
+        return points[phase];
+    }
+
+    public int nextPhase(int currentPhase, int change) {
+        currentPhase += change;
+        currentPhase = (currentPhase + points.length) % points.length;
+        return currentPhase;
+    }
+
+    public int[][] nextForm(int currentPhase, int change) {
+        return points[nextPhase(currentPhase, change)];
     }
 }

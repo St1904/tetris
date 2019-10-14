@@ -13,6 +13,7 @@ public final class Config {
     private static final String WINDOW_HEIGHT = "window.height";
     private static final String BACKGROUND_COLOR = "background.color";
     private static final String FIGURES_COLOR = "figures.color";
+    private static final String CLOCKWISE = "clockwise";
 
     public static final int LINE_WIDTH = 2;
     public static int windowHeight;
@@ -22,6 +23,7 @@ public final class Config {
     public static int blockSize;
     public static Color bgColor;
     public static Color figuresColor;
+    public static boolean clockwise;
 
     private Config() {
     }
@@ -52,5 +54,7 @@ public final class Config {
 
         bgColor = Color.web(properties.get(BACKGROUND_COLOR));
         figuresColor = Color.web(properties.get(FIGURES_COLOR));
+
+        clockwise = Boolean.parseBoolean(properties.get(CLOCKWISE));
     }
 }

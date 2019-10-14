@@ -31,10 +31,10 @@ public final class CanvasDrawing {
 
     public void drawField(byte[][] field) {
         clearField();
-        for (int y = 1; y < field.length - 1; y++) {
-            for (int x = 1; x < field[0].length - 1; x++) {
+        for (int y = 2; y < field.length - 2; y++) {
+            for (int x = 2; x < field[0].length - 2; x++) {
                 if (field[y][x] == 1) {
-                    drawBlock(x - 1, y - 1);
+                    drawBlock(x - 2, y - 2);
                 }
             }
         }
