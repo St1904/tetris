@@ -12,7 +12,9 @@ public class Field {
     private static int[][] activeForm = activeFigure.getPhase(activePhase);
     private static byte activeFigureX = 5;
     private static byte activeFigureY = 2;
-//    private static byte[][] activeFigureCoordinates = {{0, 5}, {0, 6}, {1, 5}, {1, 6}};
+
+    public static Figure nextFigure = Figure.pickRandomFigure();
+    public static int nextFigurePhase = nextFigure.pickRandomPhase();
 
     public static void useCorrection() {
         boolean firstRowIsClear = true;
@@ -104,11 +106,13 @@ public class Field {
     }
 
     public static void pickNewFigure() {
-        activeFigure = Figure.pickRandomFigure();
-        activePhase = activeFigure.pickRandomPhase();
+        activeFigure = nextFigure;
+        activePhase = nextFigurePhase;
         activeForm = activeFigure.getPhase(activePhase);
         activeFigureX = 5;
         activeFigureY = 2;
+        nextFigure = Figure.pickRandomFigure();
+        nextFigurePhase = nextFigure.pickRandomPhase();
     }
 
     public static void removeRows() {

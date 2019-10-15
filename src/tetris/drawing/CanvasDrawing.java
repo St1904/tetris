@@ -2,6 +2,7 @@ package tetris.drawing;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import tetris.figures.Figure;
 
 import static tetris.config.Config.*;
 
@@ -45,6 +46,19 @@ public final class CanvasDrawing {
         gc.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
         gc.setFill(figuresColor);
         gc.fillRect((x + 0.2) * blockSize, (y + 0.2) * blockSize, blockSize * 0.6, blockSize * 0.6);
+    }
+
+    public void drawNextFigure(Figure figure, int phase) {
+        int[][] fig = figure.getPhase(phase);
+        gc.setFill(bgColor);
+        gc.fillRect(nextFigureX * blockSize - 1, nextFigureY * blockSize - 1, 4 * blockSize + 2, 4 * blockSize + 2);
+        for (int y = 0; y < fig.length; y++) {
+            for (int x = 0; x < fig[0].length; x++) {
+                if (fig[y][x] == 1) {
+                    drawBlock(nextFigureX + x, nextFigureY + y);
+                }
+            }
+        }
     }
 
     public Canvas getCanvas() {

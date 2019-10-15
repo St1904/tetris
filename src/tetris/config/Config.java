@@ -21,6 +21,8 @@ public final class Config {
     public static int fieldWidth;
     public static int linePosition;
     public static int blockSize;
+    public static int nextFigureX;
+    public static int nextFigureY;
     public static Color bgColor;
     public static Color figuresColor;
     public static boolean clockwise;
@@ -47,10 +49,12 @@ public final class Config {
 
     private static void initFields(Map<String, String> properties) {
         windowHeight = Integer.parseInt(properties.get(WINDOW_HEIGHT));
-        windowWidth = windowHeight * 3 / 4;
-        fieldWidth = windowWidth * 2 / 3;
+        windowWidth = windowHeight * 4 / 5;
+        fieldWidth = windowWidth * 5 / 8;
         linePosition = fieldWidth + 1;
         blockSize = windowHeight / 20;
+        nextFigureX = 11;
+        nextFigureY = 6;
 
         bgColor = Color.web(properties.get(BACKGROUND_COLOR));
         figuresColor = Color.web(properties.get(FIGURES_COLOR));
